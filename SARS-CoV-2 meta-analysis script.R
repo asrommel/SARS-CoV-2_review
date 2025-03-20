@@ -74,35 +74,40 @@ folder <- "PATHWAY/Figures"
 file_name <- "forestplot_auditory_combined.png"
 
 # Save high resolution 300dpi
-png(file.path(folder, file_name), width = 15, height = 18, units = "in", res = 300)
+png(file.path(folder, file_name), width = 20, height = 24, units = "in", res = 700)
 
 # Set up a 3-row, 2-column layout
 par(mfrow=c(2, 1))
+par(mar = c(7, 5, 4, 2))
+par(mgp = c(5.5, 3, 0))
 
 forest(res_1, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.5, 1, 2, 4, 8)), 
        ilab=cbind(dft_1$ex_f_1, dft_1$ex_p_1, dft_1$un_f_1, dft_1$un_p_1),
-       ilab.xpos=c(-2.1, -1.8, -1.3, -1), cex=1, psize=1, mlab=mlabfun("RE Model", res_1),
-       xlim=c(-5, 4),xlab="Risk Ratio for First Hearing Screening  (log scale)" )
+       ilab.xpos=c(-2.6, -2.2, -1.5, -1), cex=2.2, psize=1.2, mlab=mlabfun("RE Model", res_1),
+       xlim=c(-6, 4),xlab="Risk Ratio for First Hearing Screening (log scale)" )
+
 
 ### add additional column headings to the plot
-text(c(-2.25, -1.8, -1.35, -.9), 12.5, font=2, cex=0.7,  c("Refer", "Pass", "Refer", "Pass"))
-text(c(-1.95,-1.15), 11.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
-text(-4.7, 13, "a", cex=2.5, font=2)
+text(c(-2.65, -2.1, -1.45, -0.9), 12.5, font=2, cex=2,  c("Refer", "Pass", "Refer", "Pass"))
+text(c(-2.4,-1.2), 11.5, font=2, cex=2, c("Exposed", "Unexposed"))
+text(-5.9, 13, "a", cex=2.5, font=2)
 
 # switch to bold italic font
 par(font=4)
 
 forest(res_2, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.5, 1, 2, 4, 8)), 
        ilab=cbind(dft_2$ex_f_2, dft_2$ex_p_2, dft_2$un_f_2, dft_2$un_p_2),
-       ilab.xpos=c(-2.1, -1.8, -1.3, -1), cex=1, psize=1, mlab=mlabfun("RE Model", res_2),
-       xlim=c(-5, 4),xlab="Risk Ratio for Second Hearing Screening  (log scale)" )
+       ilab.xpos=c(-2.6, -2.2, -1.5, -1), cex=2.2, psize=1.2, mlab=mlabfun("RE Model", res_2),
+       xlim=c(-6, 4),xlab="Risk Ratio for Second Hearing Screening (log scale)" )
 
 ### add additional column headings to the plot
-text(c(-2.25, -1.8, -1.35, -.9), 12.5, font=2, cex=0.7,  c("Refer", "Pass", "Refer", "Pass"))
-text(c(-1.95,-1.15), 11.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
-text(-4.7, 13, "b", cex=2.5, font=2)
+text(c(-2.65, -2.1, -1.45, -0.9), 12.5, font=2, cex=2,  c("Refer", "Pass", "Refer", "Pass"))
+text(c(-2.4,-1.2), 11.5, font=2, cex=2, c("Exposed", "Unexposed"))
+text(-5.9, 13, "b", cex=2.5, font=2)
 # switch to bold italic font
 par(font=4)
+
+dev.off()
 
 
 ##########################################################################################################
@@ -261,77 +266,87 @@ regtest(res_se)
 ##############################################################################################################################################################################################################
 
 # Set up the folder and file name for the combined plot
-folder <- "PATHWAY/asq-cat"
-file_name <- "cforestplot_asq_cat_combined.png"
+folder <- "PATHWAY/Figures"
+file_name <- "forestplot_asq_cat_combined.png"
 
-# Save high resolution 300dpi
-png(file.path(folder, file_name), width = 22, height = 21, units = "in", res = 300)
+# Save high resolution 700dpi
+png(file.path(folder, file_name), width = 27, height = 23, units = "in", res = 700)
 
 # Set up a 3-row, 2-column layout
 par(mfrow=c(3, 2))
+par(mgp = c(6, 3, 0))
+par(mar = c(8, 4, 4, 3))
+
 
 # Function to create a forest plot with a label
 create_forest_plot <- function(res, data, ex_d, ex_t, un_d, un_t, xlab, label) {
-  forest(res, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.05, 0.25, 1, 4)), 
+  forest(res, addpred=T, header="Authors and Year", atransf=exp, at=log(c(0.05, 0.25, 1, 4)), 
          ilab=cbind(data[[ex_d]], data[[ex_t]], data[[un_d]], data[[un_t]]),
-         ilab.xpos=c(-6.1, -5.5, -4.6, -4), cex=1, psize=1, mlab=mlabfun("RE Model", res),
+         ilab.xpos=c(-6.1, -5.5, -4.6, -4), cex=1.6, psize=1.1, mlab=mlabfun("RE Model", res),
          xlim=c(-10, 4), xlab=xlab)
-  text(-9.5, 10.5, label, cex=1.5, font=2)
+  text(-9.5, 9, label, cex=1.5, font=2)
 }
 
 # Plot 1: Communication Skills (df_com)
 res_com <- rma(yi, vi, data=df_com)
 create_forest_plot(res_com, data, "com_ex_d", "com_ex_t", "com_un_d", "com_un_t", 
-                   "Risk Ratio for Communication Skills (log scale)", "a)")
+                   "Risk Ratio for Communication Skills (log scale)","")
 ### add additional column headings to the plot
-text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=0.7,  c("Clinical", "Typical", "Clinical", "Typical"))
-text(c(-6,-4.4), 11, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=1.5,  c("Clinical", "Typical", "Clinical", "Typical"))
+text(c(-6,-4.4), 11, font=2, cex=1.5, c("Exposed", "Unexposed"))
+text(-9.5, 12, "a", cex=2.5, font=2)
 
 #######################################
 # Plot 2: Gross Motor Skills (df_gm)
 res_gm <- rma(yi, vi, data=df_gm)
 create_forest_plot(res_gm, data, "gm_ex_d", "gm_ex_t", "gm_un_d", "gm_un_t", 
-                   "Risk Ratio for Gross Motor Skills (log scale)", "b)")
+                   "Risk Ratio for Gross Motor Skills (log scale)", "")
 ### add additional column headings to the plot
-text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=0.7,  c("Clinical", "Typical", "Clinical", "Typical"))
-text(c(-6,-4.4), 11, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=1.5,  c("Clinical", "Typical", "Clinical", "Typical"))
+text(c(-6,-4.4), 11, font=2, cex=1.5, c("Exposed", "Unexposed"))
+text(-9.5, 12, "b", cex=2.5, font=2)
 
 ######################################
 # Plot 3: Fine Motor Skills (df_fm)
 res_fm <- rma(yi, vi, data=df_fm)
 create_forest_plot(res_fm, data, "fm_ex_d", "fm_ex_t", "fm_un_d", "fm_un_t", 
-                   "Risk Ratio for Fine Motor Skills (log scale)", "c)")
+                   "Risk Ratio for Fine Motor Skills (log scale)", "")
 ### add additional column headings to the plot
-text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=0.7,  c("Clinical", "Typical", "Clinical", "Typical"))
-text(c(-6,-4.4), 11, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=1.5,  c("Clinical", "Typical", "Clinical", "Typical"))
+text(c(-6,-4.4), 11, font=2, cex=1.5, c("Exposed", "Unexposed"))
+text(-9.5, 12, "c", cex=2.5, font=2)
 
 ########################################
 # Plot 4: Problem-Solving Skills (df_ps)
 res_ps <- rma(yi, vi, data=df_ps)
 create_forest_plot(res_ps, data, "ps_ex_d", "ps_ex_t", "ps_un_d", "ps_un_t", 
-                   "Risk Ratio for Problem-Solving Skills (log scale)", "d)")
+                   "Risk Ratio for Problem-Solving Skills (log scale)", "")
 ### add additional column headings to the plot
-text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=0.7,  c("Clinical", "Typical", "Clinical", "Typical"))
-text(c(-6,-4.4), 11, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=1.5,  c("Clinical", "Typical", "Clinical", "Typical"))
+text(c(-6,-4.4), 11, font=2, cex=1.5, c("Exposed", "Unexposed"))
+text(-9.5, 12, "d", cex=2.5, font=2)
 
 #########################################
 # Plot 5: Personal-Social Skills (df_perso)
 res_perso <- rma(yi, vi, data=df_perso)
 create_forest_plot(res_perso, data, "perso_ex_d", "perso_ex_t", "perso_un_d", "perso_un_t", 
-                   "Risk Ratio for Personal-Social Skills (log scale)", "e)")
+                   "Risk Ratio for Personal-Social Skills (log scale)", "")
 ### add additional column headings to the plot
-text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=0.7,  c("Clinical", "Typical", "Clinical", "Typical"))
-text(c(-6,-4.4), 11, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-6.3, -5.6, -4.7, -4), 10.5, font=2, cex=1.5,  c("Clinical", "Typical", "Clinical", "Typical"))
+text(c(-6,-4.4), 11, font=2, cex=1.5, c("Exposed", "Unexposed"))
+text(-9.5, 12, "e", cex=2.5, font=2)
 
 #########################################
 # Plot 6: Social-Emotional Skills (df_se)
 res_se <- rma(yi, vi, data=df_se)
 create_forest_plot(res_se, data_se, "asqse_ex_d", "asqse_ex_t", "asqse_un_d", "asqse_un_t", 
-                   "Risk Ratio for ASQ Social-Emotional (log scale)", "f)")
+                   "Risk Ratio for ASQ Social-Emotional (log scale)", "")
 ### add additional column headings to the plot
-text(c(-6.3, -5.6, -4.7, -4), 4.5, font=2, cex=0.7,  c("Clinical", "Typical", "Clinical", "Typical"))
-text(c(-6,-4.4), 5, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-6.3, -5.6, -4.7, -4), 4.5, font=2, cex=1.5,  c("Clinical", "Typical", "Clinical", "Typical"))
+text(c(-6,-4.4), 5, font=2, cex=1.5, c("Exposed", "Unexposed"))
+text(-9.5, 9, "f", cex=2.5, font=2)
 
+dev.off()
 
 ##########################################################################################################
 ################################ Meta-analysis of mean ASQ scores ########################################
@@ -430,10 +445,10 @@ regtest(res_per)
 #COMBINED PLOT 5x2
 ##############################################################################################################################################################################################################
 folder <- "PATHWAY/Figures"
-file_name <- "forestplot_asq_msd_combined.png"
+file_name <- "forestplot_asq_msd_combined1.png"
 
-# Save high resolution 300dpi
-png(file.path(folder, file_name), width = 15, height = 25, units = "in", res = 300)
+# Save high resolution 700dpi
+png(file.path(folder, file_name), width = 15, height = 25, units = "in", res = 700)
 
 # Set up a 3-row, 2-column layout
 #par(mfrow=c(5, 2))
@@ -445,12 +460,12 @@ layout(matrix(c(1,2,3,4,5,6,7,8,9,10), nrow = 5, ncol = 2, byrow = TRUE), widths
 #Forest
 forest(res_co, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.25, 1, 4)), 
        ilab=cbind(dat_asq$com_ex_m, dat_asq$com_ex_sd, dat_asq$com_un_m, dat_asq$com_un_sd),
-       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1, psize=1, mlab=mlabfun("RE Model", res_co),
-       xlim=c(-10, 4), xlab="Standardized Mean Difference for Communication Skills" )
+       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1.5, psize=1.1, mlab=mlabfun("RE Model", res_co),
+       xlim=c(-11, 4), xlab="Standardized Mean Difference for Communication Skills" )
 
 ### add additional column headings to the plot
-text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=0.7,  c("Mean", "SD", "Mean", "SD"))
-text(c(-5,-3.4), 9.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=1.5,  c("Mean", "SD", "Mean", "SD"))
+text(c(-5,-3.4), 9.5, font=2, cex=1.5, c("Exposed", "Unexposed"))
 text(-9.5, 10, "a", cex=2.5, font=2)
 # switch to bold italic font
 par(font=4)
@@ -463,12 +478,12 @@ text(-2, 0.1, "f", cex=2.5, font=2)
 #Forest
 forest(res_g, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.25, 1, 4)), 
        ilab=cbind(dat_asq$gm_ex_m, dat_asq$gm_ex_sd, dat_asq$gm_un_m, dat_asq$gm_un_sd),
-       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1, psize=1, mlab=mlabfun("RE Model", res_g),
-       xlim=c(-10, 4), xlab="Standardized Mean Difference for Gross Motor Skills" )
+       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1.5, psize=1.1, mlab=mlabfun("RE Model", res_g),
+       xlim=c(-10.5, 4), xlab="Standardized Mean Difference for Gross Motor Skills" )
 
 ### add additional column headings to the plot
-text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=0.7,  c("Mean", "SD", "Mean", "SD"))
-text(c(-5,-3.4), 9.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=1.5,  c("Mean", "SD", "Mean", "SD"))
+text(c(-5,-3.4), 9.5, font=2, cex=1.5, c("Exposed", "Unexposed"))
 text(-9.5, 10, "b", cex=2.5, font=2)
 # switch to bold italic font
 par(font=4)
@@ -481,12 +496,12 @@ text(-2, 0.1, "g", cex=2.5, font=2)
 #Forest
 forest(res_f, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.25, 1, 4)), 
        ilab=cbind(dat_asq$fm_ex_m, dat_asq$fm_ex_sd, dat_asq$fm_un_m, dat_asq$fm_un_sd),
-       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1, psize=1, mlab=mlabfun("RE Model", res_f),
-       xlim=c(-10, 4), xlab="Standardized Mean Difference for Fine Motor Skills" )
+       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1.5, psize=1.1, mlab=mlabfun("RE Model", res_f),
+       xlim=c(-10.5, 4), xlab="Standardized Mean Difference for Fine Motor Skills" )
 
 ### add additional column headings to the plot
-text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=0.7,  c("Mean", "SD", "Mean", "SD"))
-text(c(-5,-3.4), 9.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=1.5,  c("Mean", "SD", "Mean", "SD"))
+text(c(-5,-3.4), 9.5, font=2, cex=1.5, c("Exposed", "Unexposed"))
 text(-9.5, 10, "c", cex=2.5, font=2)
 # switch to bold italic font
 par(font=4)
@@ -499,11 +514,11 @@ text(-2, 0.1, "h", cex=2.5, font=2)
 #Forest
 forest(res_p, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.25, 1, 4)), 
        ilab=cbind(dat_asq$ps_ex_m, dat_asq$ps_ex_sd, dat_asq$ps_un_m, dat_asq$ps_un_sd),
-       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1, psize=1, mlab=mlabfun("RE Model", res_p),
-       xlim=c(-10, 4), xlab="Standardized Mean Difference for Problem Solving Skills" )
+       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1.5, psize=1.1, mlab=mlabfun("RE Model", res_p),
+       xlim=c(-10.5, 4), xlab="Standardized Mean Difference for Problem Solving Skills" )
 ### add additional column headings to the plot
-text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=0.7,  c("Mean", "SD", "Mean", "SD"))
-text(c(-5,-3.4), 9.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=1.5,  c("Mean", "SD", "Mean", "SD"))
+text(c(-5,-3.4), 9.5, font=2, cex=1.5, c("Exposed", "Unexposed"))
 text(-9.5, 10, "d", cex=2.5, font=2)
 # switch to bold italic font
 par(font=4)
@@ -516,11 +531,11 @@ text(-2, 0.1, "i", cex=2.5, font=2)
 #Forest
 forest(res_per, addpred=T, header="Authors and Years", atransf=exp, at=log(c(0.25, 1, 4)), 
        ilab=cbind(dat_asq$perso_ex_m, dat_asq$perso_ex_sd, dat_asq$perso_un_m, dat_asq$perso_un_sd),
-       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1, psize=1, mlab=mlabfun("RE Model", res_per),
-       xlim=c(-10, 4), xlab="Standardized Mean Difference for Communication Skills" )
+       ilab.xpos=c(-5.3, -4.6, -3.7, -3), cex=1.5, psize=1.1, mlab=mlabfun("RE Model", res_per),
+       xlim=c(-10.5, 4), xlab="Standardized Mean Difference for Communication Skills" )
 ### add additional column headings to the plot
-text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=0.7,  c("Mean", "SD", "Mean", "SD"))
-text(c(-5,-3.4), 9.5, font=2, cex=0.9, c("Exposed", "Unexposed"))
+text(c(-5.3, -4.6, -3.7, -3), 8.5, font=2, cex=1.5,  c("Mean", "SD", "Mean", "SD"))
+text(c(-5,-3.4), 9.5, font=2, cex=1.5, c("Exposed", "Unexposed"))
 text(-9.5, 10, "e", cex=2.5, font=2)
 # switch to bold italic font
 par(font=4)
@@ -529,4 +544,5 @@ par(font=4)
 funnel(res_per, ylim=c(0, 1.0), las=1, digits=list(1L,1))
 text(-2, 0.1, "j", cex=2.5, font=2)
 
+dev.off()
 
